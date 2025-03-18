@@ -1,5 +1,6 @@
 import {http} from "@/utils/http";
 
+
 type ListResult = {
     code: number;
     msg: string;
@@ -15,8 +16,25 @@ const actId = "oO3n5QRqx"
 //     });
 // }
 
+// 获取图片验证码
+export function getImageCode() {
+    return http.request({
+        url: "/page/common/imageCode",
+        method: "get",
+    })
+}
+
+// 获取短信验证码
+export function getSendSmsCode(data: any): Promise<ListResult> {
+    return http.request({
+        url: "/page/szicbc/customer/sendSmsCode",
+        method: "post",
+        data
+    })
+}
+
 // 获取库存信息
-export function getActStock(data): Promise<ListResult> {
+export function getActStock(data: any): Promise<ListResult> {
     return http.request({
         url: "/page/act/stock/" + actId,
         method: "post",
@@ -34,7 +52,7 @@ export function getOauthCheck(): Promise<ListResult> {
 }
 
 // 将openid存session
-export function getOauth(params): Promise<ListResult> {
+export function getOauth(params: any): Promise<ListResult> {
     return http.request({
         url: "/page/common/oauth/" + 'szicbc_clockin_act',
         method: "get",
@@ -51,7 +69,7 @@ export function getOauthCheckForOther(): Promise<ListResult> {
 }
 
 // 将openid存session【外部公众号】
-export function getOauthForOther(params): Promise<ListResult> {
+export function getOauthForOther(params: any): Promise<ListResult> {
     return http.request({
         url: "/page/common/oauthForOther/" + 'szicbc_clockin_act' + "/" + "o_szicbc",
         method: "get",
@@ -60,11 +78,11 @@ export function getOauthForOther(params): Promise<ListResult> {
 }
 
 //免密直接登录
-export function getLogin(params?: object): Promise<ListResult> {
+export function getLogin(data?: object): Promise<ListResult> {
     return http.request({
         url: "/page/szicbc/customer/login/" + actId,
         method: "post",
-        params
+        data
     });
 }
 
@@ -111,27 +129,71 @@ export function getClockIn(data?: object): Promise<ListResult> {
     });
 }
 
-//获取打卡进度
-export function getClockInProgress(data?: object): Promise<ListResult> {
+//订单详情
+export function apiOrderInfo(orderNo?: string): Promise<ListResult> {
     return http.request({
-        url: "/page/szicbc/customer/clockIn/progress/" + actId,
-        method: "post",
-        data
-    });
-}
-
-//领券
-export function getCouponObtain(data?: object): Promise<ListResult> {
-    return http.request({
-        url: "/page/szicbc/customer/coupon/obtain/" + actId + '/' + data.skuId,
+        url: `/page/boc/order/info/${actId}/${orderNo}`,
         method: "post",
     });
 }
 
-//领取进度
-export function getObtainProgress(data?: object): Promise<ListResult> {
+// 订单列表
+export function apiOrderList(data: object): Promise<ListResult> {
     return http.request({
-        url: "/page/szicbc/customer/coupon/obtainProgress/" + actId,
+        url: `/page/boc/order/list/${actId}`,
         method: "post",
+        data: data
+    });
+}
+
+//领取权益代金券
+export function apiBocObtain(skuId?: string): Promise<ListResult> {
+    return http.request({
+        url: `/page/boc/obtain/${actId}/${skuId}`,
+        method: "post",
+    });
+}
+
+// 商品详情
+export function apiSkuInfo(skuId?: object): Promise<ListResult> {
+    return http.request({
+        url: `/page/boc/sku/info/${actId}/${skuId}`,
+        method: "post",
+    });
+}
+
+// 微信支付回调
+export function apiPayWechatPayNotify(data?: object): Promise<ListResult> {
+    return http.request({
+        url: `/page/boc/pay/wechatPayNotify${actId}`,
+        method: "post",
+        data: data
+    });
+}
+
+// 获取微信JSAPI支付参数
+export function apiGetPayParams(data?: object): Promise<ListResult> {
+    return http.request({
+        url: `/page/boc/pay/getPayParams/${actId}`,
+        method: "post",
+        data: data
+    });
+}
+
+// 取消订单
+export function apiCancelOrder(data?: object): Promise<ListResult> {
+    return http.request({
+        url: `/page/boc/cancelOrder/${actId}`,
+        method: "post",
+        data: data
+    });
+}
+
+// 支付成功
+export function apiPaySuccess(data?: object): Promise<ListResult> {
+    return http.request({
+        url: `/page/boc/pay/success/${actId}`,
+        method: "post",
+        data: data
     });
 }

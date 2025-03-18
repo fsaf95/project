@@ -26,7 +26,7 @@
 
 - [x] ⚡ Vue3 + Vite5
 - [x] 🍕 TypeScript
-- [x] ✨ Vant4 组件库
+- [x] ✨ Vant4 组件库 + NutUI组件库
 - [x] 🌀 Tailwindcss 原子类框架
 - [x] 👏 集成多种图标方案
 - [x] 🍍 Pinia 状态管理
@@ -329,22 +329,54 @@ feat(layout): 布局完成
 本模板生产环境默认不开启 CDN 加载依赖，如需开启生产环境加载 CDN 依赖，在根目录生产环境变量文件 `.env.production` 中修改 `VITE_CDN_DEPS` 的值为 `true` 重新打包即可。
 
 
-
-
-## 鸣谢
-
- [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin) 
-
- [vant-demo](https://github.com/youzan/vant-demo) 
-
- [vue-pure-admin](https://github.com/xiaoxian521/vue-pure-admin)
-
- [vue-vben-admin](https://github.com/vbenjs/vue-vben-admin)
-
-Font Awesome Solid 图标由 [Dave Gandy](https://github.com/FortAwesome/Font-Awesome) 创作，基于 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 许可发布。
-
-
-
 ## License
 
 [MIT license](https://github.com/yulimchen/vue3-h5-template/blob/master/LICENSE).
+
+## GIT命令
+
+git clone xxx.git
+git branch dev
+git checkout -b dev
+git switch -c dev
+git branch dev   git checkout -b dev git switch -c dev
+
+# 项目目录
+````
+project
+  ├─ src
+  │  ├─ api // 接口
+  │  ├─ assets // 静态资源
+  │  ├─ components // 组件
+  │  ├─ config // 配置
+  │  ├─ directives // 指令
+  │  ├─ layout // 布局
+  │  ├─ router // 路由
+  │  ├─ store // 状态管理
+  │  ├─ styles // 样式
+  │  ├─ types // 类型
+  │  ├─ utils // 工具
+  │  ├─ views // 页面
+  │  │  ├─ about // 关于
+  │  │  ├─ home // 首页
+  │  │  ├─ shopList // 门店列表
+  │  │  ├─ productDetail // 商品详情
+  │  │  ├─ orderList // 订单列表
+  │  │  ├─ orderDetail // 订单详情
+  │  │  ├─ orderPay // 订单支付
+  │  │  ├─ orderSuccess // 订单成功
+  │  │  ├─ synthesis // 活动规则
+  │  │  └─ equityList // 权益列表
+  │  ├─ App.vue // 入口文件
+  │  ├─ main.ts // 入口文件
+  │  └─ settings.ts // 项目配置
+  ├─ .eslintrc.js
+  ├─ dist
+  ├─ node_modules
+  ├─ package.json
+  ├─ README.md
+  ├─ tsconfig.json
+  ├─ vite.config.ts 
+  ├─ public
+  ├─ .env.development
+````

@@ -51,6 +51,54 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: "主页"
     }
+  },
+  {
+    path: "/equityList",
+    name: "EquityList",
+    component: () => import("@/views/equityList/index.vue"),
+    meta: {
+      title: "主页"
+    }
+  },
+  {
+    path: "/orderList",
+    name: "OrderList",
+    component: () => import("@/views/orderList/index.vue"),
+    meta: {
+      title: "订单列表"
+    }
+  },
+  {
+    path:"/shopList",
+    name:"ShopList",
+    component:()=>import("@/views/shopList/index.vue"),
+    meta: {
+      title: '门店列表'
+    }
+  },
+  {
+    path:"/productDetail",
+    name:"ProductDetail",
+    component:()=>import("@/views/productDetail/index.vue"),
+    meta: {
+      title: '商品详情'
+    }
+  },
+  {
+    path: "/orderResult",
+    name: "OrderResult",
+    component: () => import("@/views/orderResult/index.vue"),
+    meta: {
+      title: "订单结果"
+    }
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import("@/views/404/index.vue"),
+    meta: {
+      title: "404"
+    }
   }
 ];
 

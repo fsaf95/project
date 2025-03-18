@@ -183,12 +183,12 @@ const rotate = (x: number, y: number, sin: number, cos: number, reverse: boolean
 };
 
 onMounted(() => {
-  initBubbles();
-  animateBubbles();
-  const container = document.getElementById('bubble-container');
-  if (container) {
-    container.addEventListener('resize', handleResize);
-  }
+  // initBubbles();
+  // animateBubbles();
+  // const container = document.getElementById('bubble-container');
+  // if (container) {
+  //   container.addEventListener('resize', handleResize);
+  // }
 });
 
 onUnmounted(() => {

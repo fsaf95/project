@@ -8,7 +8,6 @@ import "./styles/index.less";
 import "./styles/tailwind.css";
 // svg icon
 import "virtual:svg-icons-register";
-import VueLuckyCanvas from '@lucky-canvas/vue'
 
 import App from "./App.vue";
 import router from "./router";
@@ -23,6 +22,5 @@ import router from "./router";
 const app = createApp(App);
 app.use(store);
 app.use(router);
-app.use(VueLuckyCanvas)
 
 app.mount("#app");

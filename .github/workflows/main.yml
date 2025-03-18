@@ -24,6 +24,14 @@ jobs:
         with:
           version: 9
 
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Deploy 🔧
         run: |
           pnpm install --no-frozen-lockfile
@@ -36,4 +44,9 @@ jobs:
           branch: gh-pages
           folder: dist
           clean: true
-          
+
+      - name: Publish to npm
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

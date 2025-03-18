@@ -1,4 +1,90 @@
+<script lang="ts">
+import {defineComponent, ref, onMounted} from 'vue'
+import {getAssistList, getOrderList} from "@/api/user";
+import {showFailToast} from "vant";
+import {useRoute} from "vue-router";
+
+export default defineComponent({
+  name: "index",
+  setup() {
+    const route = useRoute();
+    const active = ref(0);
+    const prizeList = ref([]);
+    const btnState = ref({
+      0: {name: "发放中", class: "prize-box-btn1"},
+      1: {name: "领取成功", class: "prize-box-btn2"},
+      2: {name: "发放失败", class: "prize-box-btn3"}
+    });
+    const sku_data = ref({
+      3133: {title: "微信APP-我的-卡包-券和礼品"},
+      3134: {title: "美团APP-我的-红包/卡券-支付券,或者美团外卖App-我的钱包-支付券"},
+      3135: {title: "美团APP-我的-红包/卡券-支付券,或者美团外卖App-我的钱包-支付券"}
+    });
+    const state = ref({
+      1: {name: "已助力", class: ""},
+      0: {name: "未助力", class: ""},
+    })
+    const recordList = ref([])
+
+    onMounted(() => {
+      // active.value = Number(route.query.index);
+      // if (active.value !== 0) {
+      //   handleOrderList()
+      //   handleAssistList()
+      // }
+    })
+
+    const onClickTab = () => {
+      if (active.value === 1) {
+        handleOrderList()
+      } else if (active.value === 2) {
+        handleAssistList()
+      } else {
+      }
+    }
+
+//我的权益
+    const handleOrderList = () => {
+      getOrderList().then(res => {
+        if (res.code !== 0) {
+          showFailToast(res.msg)
+        } else {
+          prizeList.value = res.data
+        }
+      }).catch(error => {
+        showFailToast(error.msg)
+      })
+    }
+
+//邀请记录
+    const handleAssistList = () => {
+      getAssistList().then(res => {
+        if (res.code !== 0) {
+          showFailToast(res.msg)
+        } else {
+          recordList.value = res.data
+        }
+      }).catch(error => {
+        showFailToast(error.msg)
+      })
+    }
+    return {
+      active,
+      prizeList,
+      btnState,
+      sku_data,
+      state,
+      recordList,
+      handleAssistList,
+      handleOrderList,
+      onClickTab,
+    }
+  }
+})
+</script>
+
 <template>
+  <!-- 活动规则-权益列表-邀请记录页面 -->
   <div class="tabs-con">
     <van-tabs v-model:active="active" @click-tab="onClickTab">
       <van-tab title="活动规则">
@@ -177,108 +263,7 @@
   </div>
 </template>
 
-<script setup>
-import {onMounted, ref} from "vue";
-import {useRoute} from "vue-router";
-import {getAssistList, getOrderList} from "@/api/user";
-import {showFailToast, showToast} from "vant";
-
-const route = useRoute();
-const active = ref(0);
-const prizeList = ref([
-  // {
-  //   sku_id: "3135",
-  //   title: "滴滴打车立减金",
-  //   obtain_time: "发放时间：2024-11-01 12：33",
-  //   coupon_value: 8,
-  //   coupon_min: 10,
-  //   obtain_status: 0
-  // },
-  // {
-  //   sku_id: "3134",
-  //   title: "滴滴打车立减金",
-  //   obtain_time: "发放时间：2024-11-01 12：33",
-  //   coupon_value: 8,
-  //   coupon_min: 10,
-  //   obtain_status: 1
-  // },
-  // {
-  //   sku_id: "3133",
-  //   title: "滴滴打车立减金",
-  //   obtain_time: "发放时间：2024-11-01 12：33",
-  //   coupon_value: 8,
-  //   coupon_min: 10,
-  //   obtain_status: 2
-  // },
-]);
-const btnState = ref({
-  0: {name: "发放中", class: "prize-box-btn1"},
-  1: {name: "领取成功", class: "prize-box-btn2"},
-  2: {name: "发放失败", class: "prize-box-btn3"}
-});
-const sku_data = ref({
-  3133: {title: "微信APP-我的-卡包-券和礼品"},
-  3134: {title: "美团APP-我的-红包/卡券-支付券,或者美团外卖App-我的钱包-支付券"},
-  3135: {title: "美团APP-我的-红包/卡券-支付券,或者美团外卖App-我的钱包-支付券"}
-});
-const state = ref({
-  1: {name: "已助力", class: ""},
-  0: {name: "未助力", class: ""},
-})
-const recordList = ref([
-  // {id: 1, user_name: '信息', mobile: 15425144512, status: 1},
-  // {id: 2, user_name: '信息2', mobile: 15425144512, status: 0},
-  // {id: 3, user_name: '信息3', mobile: 15425144512, status: 1},
-  // {id: 4, user_name: '信息4', mobile: 15425144512, status: 0},
-  // {id: 5, user_name: '信息5', mobile: 15425144512, status: 1},
-  // {id: 6, user_name: '信息6', mobile: 15425144512, status: 0},
-  // {id: 7, user_name: '信息7', mobile: 15425144512, status: 1},
-])
-onMounted(() => {
-  active.value = Number(route.query.index);
-  if (active.value !== 0) {
-    handleOrderList()
-    handleAssistList()
-  }
-});
-
-const onClickTab = () => {
-  if (active.value === 1) {
-    handleOrderList()
-  } else if (active.value === 2) {
-    handleAssistList()
-  } else {
-  }
-}
-
-//我的权益
-const handleOrderList = () => {
-  getOrderList().then(res => {
-    if (res.code !== 0) {
-      showFailToast(res.msg)
-    } else {
-      prizeList.value = res.data
-    }
-  }).catch(error => {
-    showFailToast(error.msg)
-  })
-}
-
-//邀请记录
-const handleAssistList = () => {
-  getAssistList().then(res => {
-    if (res.code !== 0) {
-      showFailToast(res.msg)
-    } else {
-      recordList.value = res.data
-    }
-  }).catch(error => {
-    showFailToast(error.msg)
-  })
-}
-</script>
-
-<style lang="less">
+<style scoped lang="less">
 .tabs-con {
   position: relative;
   padding: 0 30px;
